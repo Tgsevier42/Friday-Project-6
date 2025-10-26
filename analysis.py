@@ -33,12 +33,16 @@ def load_data(db_file):
     print(f"Loading data from {db_file}...")
     try:
         conn = sqlite3.connect(db_file)
-        # !!! IMPORTANT: Update 'reviews' and 'feedback' if your table/column names are different !!!
-        df = pd.read_sql_query("SELECT review_text FROM reviews", conn)
+        # 1. Select the correct column from your database
+        df = pd.read_sql_query("SELECT review_text FROM reviews", conn) 
         conn.close()
         
-        # Add a unique ID for tracking
+        # 2. Rename the column to 'feedback' so the rest of the script works
+        df = df.rename(columns={'review_text': 'feedback'}) 
+        
+        # 3. Add a unique ID for tracking
         df['review_id'] = range(1, len(df) + 1)
+        
         print(f"Successfully loaded {len(df)} reviews.")
         return df
     except Exception as e:
