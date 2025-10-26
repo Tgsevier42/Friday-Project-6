@@ -95,7 +95,9 @@ def get_aspects(review_text):
     
     try:
         response = client.chat.completions.create(
-            model="gpt-4", # Using GPT-4 for better JSON formatting and accuracy
+            # --- THIS IS THE CHANGE ---
+            model="gpt-3.5-turbo-1106", # Switched to a model that supports JSON mode
+            # --------------------------
             response_format={"type": "json_object"}, # Enforce JSON output
             messages=[
                 {"role": "system", "content": system_prompt},
@@ -119,6 +121,7 @@ def get_aspects(review_text):
     except Exception as e:
         print(f"Error in aspect API call: {e}")
         return [] # Return empty list on error
+
 
 # --- 5. DATA PROCESSING (Applying Functions) ---
 
