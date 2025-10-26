@@ -34,7 +34,7 @@ def load_data(db_file):
     try:
         conn = sqlite3.connect(db_file)
         # !!! IMPORTANT: Update 'reviews' and 'feedback' if your table/column names are different !!!
-        df = pd.read_sql_query("SELECT feedback FROM reviews", conn)
+        df = pd.read_sql_query("SELECT review_text FROM reviews", conn)
         conn.close()
         
         # Add a unique ID for tracking
